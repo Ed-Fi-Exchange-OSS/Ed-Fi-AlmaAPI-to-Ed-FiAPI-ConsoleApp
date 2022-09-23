@@ -5,10 +5,11 @@ This .Net Core console application pulls from the Alma API and inserts into the 
 ## Instructions
 1. Download the code: `git clone https://github.com/Ed-Fi-Exchange-OSS/Ed-Fi-AlmaAPI-to-Ed-FiAPI-ConsoleApp`
 2. Compile the application and publish it.
-3. Edit the appsettings.json file to include your Source and Destination APIs information.
-4. Run the application by executing the EdFi.AlmaToEdFi.Cmd.exe
+3. Copy appsettings.template.json to appsettings.json
+4. Edit the appsettings.json file to include your Source and Destination APIs information.
+5. Run the application by executing the EdFi.AlmaToEdFi.Cmd.exe
 
-   4.1 Run the application by passing command line parameters
+   5.1 Run the application by passing command line parameters
       #####   	Allowed Parameters:
       ```
        "--schoolYearFilter", "<School_Year_Filter>" The application gets only the information related with this School Year.
