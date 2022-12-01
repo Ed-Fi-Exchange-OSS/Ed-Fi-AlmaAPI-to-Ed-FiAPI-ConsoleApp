@@ -44,10 +44,10 @@ namespace Alma.Api.Sdk.Extractors
                 schoolYearIdFilter = $"?schoolYearId={schoolYearId}";
 
             var almaSections = _sectionsExtractor.Extract(almaSchoolCode,schoolYearId);
-            var almaCourses = _coursesExtractor.Extract(almaSchoolCode)
-                              .GroupBy(x => new { x.schoolYearId, x.id })
-                              .Select(g => g.First())
-                              .ToList();
+            //var almaCourses = _coursesExtractor.Extract(almaSchoolCode)
+            //                  .GroupBy(x => new { x.schoolYearId, x.id })
+            //                  .Select(g => g.First())
+            //                  .ToList();
             var staffs = _staffsExtractor.Extract(almaSchoolCode,schoolYearId);
             var staffsSection = new ConcurrentBag<StaffSection>();
             var studentIndex = 0;
@@ -98,6 +98,7 @@ namespace Alma.Api.Sdk.Extractors
                 {
                     clas.Course = almaSections.FirstOrDefault(x => x.id == clas.id && x.schoolYearId == clas.schoolYearId).Course;
                     clas.ClassName = almaSections.FirstOrDefault(sec => sec.id == clas.id).name;
+                    clas.gradingPeriods = almaSections.FirstOrDefault(x => x.id == clas.id && x.schoolYearId == clas.schoolYearId).gradingPeriods;
                 }
             });
             return classesResponse.response.classes;

@@ -101,6 +101,8 @@ namespace Alma.Api.Sdk.Extractors
                 {
                     clas.courseId = almaSections.FirstOrDefault(x => x.id == clas.id).courseId;
                     clas.Course = almaSections.FirstOrDefault(x => x.id == clas.id && x.schoolYearId == clas.schoolYearId).Course;
+                    //We need the grading periods to get the session
+                    clas.gradingPeriods = almaSections.FirstOrDefault(x => x.id == clas.id && x.schoolYearId == clas.schoolYearId).gradingPeriods;
                 }
             });
 

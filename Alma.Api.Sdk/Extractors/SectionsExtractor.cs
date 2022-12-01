@@ -51,11 +51,9 @@ namespace Alma.Api.Sdk.Extractors
             {
                 // Add the schoolyear
                 c.SchoolYear = almaSchoolYears.FirstOrDefault(sy => sy.id == c.schoolYearId);
-
                 var almaCourse = almaCourses.FirstOrDefault(cour => cour.id == c.courseId && cour.schoolYearId==c.schoolYearId);
-
                 if (almaCourse==null)
-                    _logger.LogWarning( $"{almaSchoolCode}/courses/{c.courseId} :  No Courses exist for courseId:{c.courseId} ,class {c.id}- {c.name}, School Year:{Convert.ToDateTime(c.SchoolYear.endDate).Year}");
+                    _logger.LogWarning( $"{almaSchoolCode}/courses/{c.courseId}:  No Courses exist for courseId:{c.courseId} ,class {c.id}- {c.name}, School Year:{Convert.ToDateTime(c.SchoolYear.endDate).Year}");
                 else {
                     c.Course = almaCourse;
                     classesList.Add(c);

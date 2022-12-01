@@ -1,4 +1,4 @@
-﻿using Alma.Api.Sdk.Extractors.Alma;
+using Alma.Api.Sdk.Extractors.Alma;
 using Alma.Api.Sdk.Models;
 using RestSharp;
 using RestSharp.Serializers.Utf8Json;
@@ -18,17 +18,22 @@ namespace Alma.Api.Sdk.Extractors
         private readonly RestClient _client;
         private readonly IStudentsEnrollmentsExtractor _studentsEnrollmentsExtractor;
         private readonly IStudentsExtractor _studentsExtractor;
+        private readonly IStudentsGradeLevelExtractor _StudentsGradeLevelExtractor;
+        
         public StudentSchoolAssociationExtractor(IAlmaRestClientConfigurationProvider client,
             IStudentsExtractor studentsExtractor,
-            IStudentsEnrollmentsExtractor studentsEnrollmentsExtractor)
+            IStudentsEnrollmentsExtractor studentsEnrollmentsExtractor,
+            IStudentsGradeLevelExtractor StudentsGradeLevelExtractor)
         {
             _client = client.GetRestClient();
             _studentsEnrollmentsExtractor = studentsEnrollmentsExtractor;
             _studentsExtractor = studentsExtractor;
+            _StudentsGradeLevelExtractor = StudentsGradeLevelExtractor;
         }
         public List<Enrollment> Extract(string almaSchoolCode, string schoolYearId = "")
         {
             var studentEnrollments = _studentsEnrollmentsExtractor.Extract(almaSchoolCode,schoolYearId);
+          
 
             var almaStudents = _studentsExtractor.Extract(almaSchoolCode,schoolYearId);
             var studentsSchoolAssociation = new List<Enrollment>();
@@ -36,6 +41,7 @@ namespace Alma.Api.Sdk.Extractors
             Console.WriteLine($"Processing Enrollments from  {count} students.");
             almaStudents.response.ForEach(stud =>
             {
+              
                 studentEnrollments.students.FirstOrDefault(student => student.id == stud.id).Enrollment.ForEach(enroll =>
                 {
                     enroll.studentId = stud.id;
